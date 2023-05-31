@@ -1,0 +1,37 @@
+{
+	"remoteIdentifier": "AAAAA",
+	"callback": "undefined",
+	"type": "card",
+	"size": {
+		"width": 600,
+		"height": 1000
+	},
+	"elements": [
+		{ 
+			"type": "image",
+			"asset": "https://cdn.discordapp.com/attachments/1083687175998152714/1113486254953222205/rainbow_overlay.png",
+			"x": 0,
+			"y": 300,
+			"width": 600,
+			"height": 1000
+		},
+		{ 
+			"type": "image",
+			"asset": "https://cdn.discordapp.com/attachments/1083687175998152714/1113486177002070126/template.png",
+			"x": 0,
+			"y": 300,
+			"width": 600,
+			"height": 1000
+		},
+		{
+			"type": "text",
+			"text": "Ninomae Ina'nis",
+			"fontSize": 55,
+			"x": 0,
+			"y": 700,
+			"width": 600,
+			"height": 300,
+			"horizontalAlignment": "center"
+		}
+	]
+}

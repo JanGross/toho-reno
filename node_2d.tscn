@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnfydq6205nno"]
+
+[ext_resource type="Script" path="res://render.gd" id="1_13t8u"]
+[ext_resource type="Texture2D" uid="uid://skthvfx7pq6m" path="res://_e2199ab5-ff42-4ddf-8540-1c16e2d7889f.jpeg" id="1_la77t"]
+[ext_resource type="Script" path="res://JobServer.gd" id="3_mg2dt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d06ag"]
+font_size = 90
+font_color = Color(1, 0, 1, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 35
+shadow_color = Color(0, 0, 0, 0.337255)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_13t8u")
+
+[node name="Placeholder" type="Sprite2D" parent="."]
+position = Vector2(550, 322)
+scale = Vector2(0.381836, 0.381836)
+texture = ExtResource("1_la77t")
+
+[node name="Label" type="Label" parent="Placeholder"]
+offset_left = -513.309
+offset_top = 209.514
+offset_right = 510.691
+offset_bottom = 499.514
+text = "Test Render"
+label_settings = SubResource("LabelSettings_d06ag")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tstamp" type="Label" parent="Placeholder"]
+offset_left = -505.453
+offset_top = 515.928
+offset_right = 518.547
+offset_bottom = 805.928
+text = "%s"
+label_settings = SubResource("LabelSettings_d06ag")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JobServerNode" type="HTTPRequest" parent="."]
+script = ExtResource("3_mg2dt")

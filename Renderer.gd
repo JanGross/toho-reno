@@ -59,8 +59,10 @@ func RenderComposition(composition):
 	for comp in composition:
 		var type = comp["type"]
 		if type == "text":
+			print("Render label")
 			await RenderLabel(comp)
 		if type == "image":
+			print("Render image")
 			await RenderImage(comp)
 
 func RenderImage(def):
@@ -72,6 +74,7 @@ func RenderImage(def):
 	texture.set_size_override(Vector2(def["width"], def["height"]))
 	imageNode.texture = texture
 	$"/root/Main/RenderContainer".add_child(imageNode)
+	print("Image added")
 	
 func RenderLabel(def):
 	var textNode = Label.new()
@@ -93,6 +96,7 @@ func RenderLabel(def):
 		textNode.horizontal_alignment = alignments[def["horizontalAlignment"]]
 		
 	$"/root/Main/RenderContainer".add_child(textNode)
+	print("Label added")
 	
 func render():
 	print("Rendering frame %s" % counter)

@@ -14,6 +14,8 @@ func InitWebsocket():
 	print("Connected")
 	while true:
 		await PollWebsocket()
+		RenderingServer.force_draw()
+		DisplayServer.process_events()
 	
 
 func PollWebsocket():

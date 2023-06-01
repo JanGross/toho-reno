@@ -4,9 +4,9 @@ var socket = WebSocketPeer.new()
 
 func InitWebsocket():
 	print("Connecting websocket ")
-	var i = 0
+
+	socket.connect_to_url($"/root/Main".websocket_url, TLSOptions.client_unsafe())
 	while socket.get_ready_state() != WebSocketPeer.STATE_OPEN:
-		socket.connect_to_url($"/root/Main".websocket_url, TLSOptions.client_unsafe())
 		socket.poll()
 		
 		

@@ -34,7 +34,11 @@ func RenderJob(job):
 		renderContainer.remove_child(node)
 		node.free()
 	print("Cleared Render container")
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	DisplayServer.window_set_size(Vector2(job["size"]["width"], job["size"]["height"]))
+	get_viewport().size = Vector2(job["size"]["width"], job["size"]["height"])
+	print("Rendering with size ", get_viewport().size)
+	
 	await RenderComposition(job["elements"])
 	print("Rendered Composition")
 	await RenderingServer.frame_post_draw

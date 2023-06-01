@@ -36,6 +36,7 @@ func RenderJob(job):
 	print("Cleared Render container")
 	DisplayServer.window_set_size(Vector2(job["size"]["width"], job["size"]["height"]))
 	await RenderComposition(job["elements"])
+	print("Rendered Composition")
 	await RenderingServer.frame_post_draw
 	
 	# Get rendered image
@@ -56,16 +57,18 @@ func run_test():
 	counter += 1
 	
 func RenderComposition(composition):
+	var zIndex = 0
 	for comp in composition:
 		var type = comp["type"]
 		if type == "text":
 			print("Render label")
-			await RenderLabel(comp)
+			await RenderLabel(comp, zIndex)
 		if type == "image":
 			print("Render image")
-			await RenderImage(comp)
+			await RenderImage(comp, zIndex)
+		zIndex += 1
 
-func RenderImage(def):
+func RenderImage(def, zIndex):
 	var imageNode = TextureRect.new()
 	var image = Image.new()
 	image = await $"../Remote".GetRemoteImage(def["asset"])
@@ -73,10 +76,12 @@ func RenderImage(def):
 	texture = ImageTexture.create_from_image(image)
 	texture.set_size_override(Vector2(def["width"], def["height"]))
 	imageNode.texture = texture
+	imageNode.name = def["asset"].right(15)
+	imageNode.z_index = zIndex
 	$"/root/Main/RenderContainer".add_child(imageNode)
 	print("Image added")
 	
-func RenderLabel(def):
+func RenderLabel(def, zIndex):
 	var textNode = Label.new()
 	textNode.text = def["text"]
 	var pos = Vector2(float(def["x"]), float(def["y"]))
@@ -94,7 +99,8 @@ func RenderLabel(def):
 	if "horizontalAlignment" in def:
 		var alignments = { "left": HORIZONTAL_ALIGNMENT_LEFT, "right": HORIZONTAL_ALIGNMENT_RIGHT, "center": HORIZONTAL_ALIGNMENT_CENTER, "fill": HORIZONTAL_ALIGNMENT_FILL }
 		textNode.horizontal_alignment = alignments[def["horizontalAlignment"]]
-		
+	textNode.name = def["text"].substr(0,15)
+	textNode.z_index = zIndex
 	$"/root/Main/RenderContainer".add_child(textNode)
 	print("Label added")
 	

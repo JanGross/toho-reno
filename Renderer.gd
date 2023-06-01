@@ -1,9 +1,11 @@
 extends Node2D
 
 var counter = 1
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("render ready")
+	pass
+	"""
 	var job = await $JobServer.GetJob()
 	var jobHash = str([job["size"], job["elements"]]).sha1_text()
 	print("Job hash %s" % jobHash)
@@ -13,20 +15,38 @@ func _ready():
 		print("Skipping, file exists")
 		get_tree().quit()
 		return
+	"""
 	
+	#DisplayServer.window_set_size(Vector2(job["size"]["width"], job["size"]["height"]))
+	#await RenderComposition(job["elements"])
+	#await RenderingServer.frame_post_draw
 	
+	# Get rendered image
+	#var img = get_viewport().get_texture().get_image()
+	
+	#img.save_png(outFile)
+	#get_tree().quit()
+	
+func RenderJob(job):
+	print("Rendering ", job["jobId"])
+	var renderContainer = $"/root/Main/RenderContainer"
+	for node in renderContainer.get_children():
+		renderContainer.remove_child(node)
+		node.free()
+	print("Cleared Render container")
 	DisplayServer.window_set_size(Vector2(job["size"]["width"], job["size"]["height"]))
 	await RenderComposition(job["elements"])
 	await RenderingServer.frame_post_draw
 	
 	# Get rendered image
 	var img = get_viewport().get_texture().get_image()
+	var outFile = "%s_%s.png" % [job["type"],job["jobId"]]
+	img.save_png("output/" + outFile)
 	
-	img.save_png(outFile)
-	#get_tree().quit()
+	return outFile
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 	
 func run_test():
@@ -46,12 +66,12 @@ func RenderComposition(composition):
 func RenderImage(def):
 	var imageNode = TextureRect.new()
 	var image = Image.new()
-	image = await $Remote.GetRemoteImage(def["asset"])
+	image = await $"../Remote".GetRemoteImage(def["asset"])
 	var texture = ImageTexture.new()
 	texture = ImageTexture.create_from_image(image)
 	texture.set_size_override(Vector2(def["width"], def["height"]))
 	imageNode.texture = texture
-	$Placeholder.add_sibling(imageNode)
+	$"/root/Main/RenderContainer".add_child(imageNode)
 	
 func RenderLabel(def):
 	var textNode = Label.new()
@@ -72,11 +92,11 @@ func RenderLabel(def):
 		var alignments = { "left": HORIZONTAL_ALIGNMENT_LEFT, "right": HORIZONTAL_ALIGNMENT_RIGHT, "center": HORIZONTAL_ALIGNMENT_CENTER, "fill": HORIZONTAL_ALIGNMENT_FILL }
 		textNode.horizontal_alignment = alignments[def["horizontalAlignment"]]
 		
-	get_tree().get_root().add_child(textNode)
+	$"/root/Main/RenderContainer".add_child(textNode)
 	
 func render():
 	print("Rendering frame %s" % counter)
-	var tstamp_label = $Placeholder/tstamp
+	var tstamp_label = $"../Placeholder/tstamp"
 	var tstamp = Time.get_ticks_usec()
 	tstamp_label.text = str(tstamp) + "\n %s" % counter
 	await RenderingServer.frame_post_draw

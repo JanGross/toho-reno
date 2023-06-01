@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpcjcts1oj1xb"]
+[gd_scene load_steps=6 format=3 uid="uid://8flqeh3gn68"]
 
-[ext_resource type="Script" path="res://render.gd" id="1_13t8u"]
+[ext_resource type="Script" path="res://Renderer.gd" id="1_0maq1"]
+[ext_resource type="Script" path="res://Main.gd" id="1_6qp7h"]
 [ext_resource type="Texture2D" uid="uid://skthvfx7pq6m" path="res://_e2199ab5-ff42-4ddf-8540-1c16e2d7889f.jpeg" id="1_la77t"]
 [ext_resource type="Script" path="res://JobServer.gd" id="3_mg2dt"]
 [ext_resource type="Script" path="res://RemoteLoader.gd" id="4_k4afm"]
 
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_13t8u")
+[node name="Main" type="Node2D"]
+script = ExtResource("1_6qp7h")
 
 [node name="JobServer" type="HTTPRequest" parent="."]
 script = ExtResource("3_mg2dt")
@@ -19,3 +20,8 @@ visible = false
 position = Vector2(580.25, 314.25)
 scale = Vector2(0.532715, 0.532715)
 texture = ExtResource("1_la77t")
+
+[node name="Renderer" type="Node2D" parent="."]
+script = ExtResource("1_0maq1")
+
+[node name="RenderContainer" type="Node" parent="."]

@@ -4,6 +4,7 @@ var config = ConfigFile.new()
 
 var websocket_url
 var public_path
+var output_dir
 var rendering = false
 signal finished_rendering
 
@@ -12,8 +13,11 @@ func _ready():
 	config.load("res://config.cfg")
 	websocket_url = config.get_value("core", "websocket_url")
 	public_path = config.get_value("core", "public_path")
-	
+	output_dir = config.get_value("core", "output_dir")
 	print("Starting render node")
+	
+	var directory = DirAccess.open(".")
+	directory.make_dir(output_dir)
 	$JobServer.InitWebsocket()
 
 func FinishedRendering():

@@ -9,8 +9,13 @@ func InitWebsocket():
 	while socket.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		socket.poll()
 		
-		
-	socket.send_text(str({"register": 1}))
+	var init_message = {
+		"register": {
+			"version": 1,
+			"auth_key": $"/root/Main".auth_key
+		}
+	}
+	socket.send_text(str(init_message))
 	print("Connected")
 	while true:
 		await PollWebsocket()

@@ -76,14 +76,16 @@ func RenderImage(def, zIndex):
 	var imageNode = TextureRect.new()
 	var image = Image.new()
 	image = await $"../Remote".GetRemoteImage(def["asset"])
+	var pos = Vector2(float(def["x"]), float(def["y"]))
 	var texture = ImageTexture.new()
 	texture = ImageTexture.create_from_image(image)
 	texture.set_size_override(Vector2(def["width"], def["height"]))
 	imageNode.texture = texture
 	imageNode.name = def["asset"].right(15)
+	imageNode.set_position(pos)
 	imageNode.z_index = zIndex
 	$"/root/Main/RenderContainer".add_child(imageNode)
-	print("Image added")
+	print("Image added at %s" % pos)
 	
 func RenderLabel(def, zIndex):
 	var textNode = Label.new()

@@ -3,6 +3,7 @@
 .godot/
 /[Bb]uild/
 /[Oo]utput/
+/[Cc]ache/
 # Godot-specific ignores
 .import/
 export.cfg

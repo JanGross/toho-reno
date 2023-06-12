@@ -101,7 +101,7 @@ func RenderLabel(def, zIndex):
 	textNode.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	textNode.set_position(pos)
 	textNode.set_size(Vector2(float(def["width"]), float(def["height"])))
-	textNode.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	textNode.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	if "horizontalAlignment" in def:
 		var alignments = { "left": HORIZONTAL_ALIGNMENT_LEFT, "right": HORIZONTAL_ALIGNMENT_RIGHT, "center": HORIZONTAL_ALIGNMENT_CENTER, "fill": HORIZONTAL_ALIGNMENT_FILL }
 		textNode.horizontal_alignment = alignments[def["horizontalAlignment"]]

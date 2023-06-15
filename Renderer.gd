@@ -45,8 +45,12 @@ func RenderJob(job):
 	
 	# Get rendered image
 	var img = get_viewport().get_texture().get_image()
-	var outFile = "%s_%s.png" % [job["type"],str(job["elements"]).hash()]
-	img.save_png("%s/%s" % [$"/root/Main".output_dir, outFile])
+	var outFile = "{path}/{type}_{hash}.png".format({ 
+		"path":$"/root/Main".output_dir, 
+		"type":job["type"], 
+		"hash": str(job["elements"]).hash()
+	})
+	img.save_png(outFile)
 	
 	return outFile
 

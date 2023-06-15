@@ -4,7 +4,8 @@ var socket = WebSocketPeer.new()
 
 func InitWebsocket():
 	print("Connecting websocket ")
-
+	socket.max_queued_packets = 32768
+	socket.outbound_buffer_size = 5000000
 	socket.connect_to_url($"/root/Main".websocket_url, TLSOptions.client_unsafe())
 	while socket.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		socket.poll()
@@ -38,20 +39,37 @@ func PollWebsocket():
 				var job = json["job"]
 				print("Recevied Job ", job["jobId"])
 				main.rendering = true
-				var result = await $"../Renderer".RenderJob(job)
+				
+				var result_path = await $"../Renderer".RenderJob(job)
+				var result_value = ""
+				var result_type = "URL" if $"/root/Main".serve_mode == "local" else "B64:PNG"
+				if $"/root/Main".serve_mode == "local":
+					result_value = result_path
+				if $"/root/Main".serve_mode == "remote":
+					print("trying to open " + result_path)
+					var resut_file = FileAccess.open(result_path,FileAccess.READ)
+					result_value = "{path}:{data}".format({
+						"path":result_path,
+						"data": Marshalls.raw_to_base64(resut_file.get_buffer(resut_file.get_length()))
+						})
+				var debugFile = FileAccess.open("user://debug.log", FileAccess.WRITE)
+				debugFile.store_string(result_value)
+				debugFile.flush()
+				debugFile.close()
 				var response = {
 					"result": {
+						"type": result_type,
 						"jobId": job["jobId"],
-						"path": $"/root/Main".public_path + result
+						"value": result_value
 					}
 				}
 				socket.send_text(str(response))
-				print("Sent result ", result)
+				print("Sent result ", result_path)
 				main.rendering = false
 	elif state == WebSocketPeer.STATE_CLOSING:
-		# Keep polling to achieve proper close.
-		pass
+		socket.poll()
 	elif state == WebSocketPeer.STATE_CLOSED:
+		print(socket.get_packet())
 		var code = socket.get_close_code()
 		var reason = socket.get_close_reason()
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])

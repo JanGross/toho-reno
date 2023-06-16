@@ -23,9 +23,8 @@ func _ready():
 	
 	print("Starting render node")
 	
-	var directory = DirAccess.open(".")
-	directory.make_dir(output_dir)
-	directory.make_dir(cache_dir)
+	DirAccess.make_dir_absolute(output_dir)
+	DirAccess.make_dir_absolute(cache_dir)
 	$JobServer.InitWebsocket()
 
 func FinishedRendering():

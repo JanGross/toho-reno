@@ -49,7 +49,7 @@ func PollWebsocket():
 					print("trying to open " + result_path)
 					var resut_file = FileAccess.open(result_path,FileAccess.READ)
 					result_value = "{path}:{data}".format({
-						"path":result_path,
+						"path": result_path.get_file(),
 						"data": Marshalls.raw_to_base64(resut_file.get_buffer(resut_file.get_length()))
 						})
 				var debugFile = FileAccess.open("user://debug.log", FileAccess.WRITE)

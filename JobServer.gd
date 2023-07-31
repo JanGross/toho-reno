@@ -2,6 +2,8 @@ extends HTTPRequest
 
 var socket = WebSocketPeer.new()
 
+var client_id
+
 func InitWebsocket():
 	print("Connecting websocket ")
 	socket.max_queued_packets = 32768
@@ -35,6 +37,7 @@ func PollWebsocket():
 			print("Packet: ", packet.slice(0,5), "...")
 			if "welcome" in json:
 				print("Registered as client %s" % json["welcome"]["clientId"])
+				client_id = json["welcome"]["clientId"]
 			if "job" in json:
 				var job = json["job"]
 				print("Recevied Job ", job["jobId"])

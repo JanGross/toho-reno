@@ -93,7 +93,11 @@ func RenderImage(def, zIndex):
 	
 func RenderLabel(def, zIndex):
 	var textNode = Label.new()
-	textNode.text = def["text"]
+	var labelText = def["text"]
+	labelText = labelText.replace('%nodeid%', $"/root/Main/JobServer".client_id)
+	labelText = labelText.replace('%servemode%', $"/root/Main".serve_mode)
+	
+	textNode.text = labelText;
 	var pos = Vector2(float(def["x"]), float(def["y"]))
 	print("Rendering label '%s' at %s" % [def["text"], pos])
 

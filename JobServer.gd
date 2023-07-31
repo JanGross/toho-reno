@@ -24,6 +24,7 @@ func InitWebsocket():
 		await PollWebsocket()
 		RenderingServer.force_draw()
 		DisplayServer.process_events()
+		await get_tree().create_timer(0.1).timeout
 	
 
 func PollWebsocket():

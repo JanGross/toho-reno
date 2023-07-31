@@ -8,6 +8,7 @@ var output_dir
 var serve_mode
 var cache_dir
 var auth_key
+var hostname
 var rendering = false
 signal finished_rendering
 
@@ -20,6 +21,10 @@ func _ready():
 	serve_mode = config.get_value("core", "serve_mode")
 	cache_dir = config.get_value("core", "cache_dir")
 	auth_key = config.get_value("core", "auth_key")
+	hostname = config.get_value("core", "hostname")
+	
+	if OS.has_environment("USERNAME"):
+		hostname = "%s/%s" % [OS.get_environment("USERNAME"), hostname]
 	
 	print("Starting render node")
 	

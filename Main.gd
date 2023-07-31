@@ -25,6 +25,8 @@ func _ready():
 	
 	if OS.has_environment("USERNAME"):
 		hostname = "%s/%s" % [OS.get_environment("USERNAME"), hostname]
+	else:
+		hostname = "%s/%s" % [OS.get_name(), hostname]
 	
 	print("Starting render node")
 	

@@ -30,7 +30,8 @@ func GetRemoteImage(url):
 		error = image.load_jpg_from_buffer(res[3])
 	if error != OK:
 		print("Error fetching image ", str(error))
-		image.load("res://assets/fallback_card.png")
-	image.save_png(outFile)
-	print("Saved new image to cache. " + outFile)
+		image = load("res://assets/fallback_card.png")
+	else:
+		image.save_png(outFile)
+		print("Saved new image to cache. " + outFile)
 	return image

@@ -17,6 +17,9 @@ func GetRemoteImage(url):
 	
 	timeout = 1000
 	request(url)
+	while get_http_client_status() != HTTPClient.STATUS_CONNECTED:
+		await get_tree().create_timer(0.001).timeout
+		$"/root/Main/JobServer".socket.poll()
 	var res = await request_completed
 	var magicBytes = res[3].slice(0,8)
 	print(magicBytes)
@@ -30,8 +33,10 @@ func GetRemoteImage(url):
 		error = image.load_jpg_from_buffer(res[3])
 	if error != OK:
 		print("Error fetching image ", str(error))
-		image = load("res://assets/fallback_card.png")
+		var fallback = load("res://assets/fallback_card.png")
+		image = fallback.get_image()
 	else:
 		image.save_png(outFile)
 		print("Saved new image to cache. " + outFile)
+	
 	return image

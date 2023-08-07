@@ -17,6 +17,7 @@ process_mode = 3
 script = ExtResource("3_18f1s")
 
 [node name="Placeholder" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(580.25, 314.25)
 scale = Vector2(0.532715, 0.532715)
 texture = ExtResource("4_vknm6")

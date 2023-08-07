@@ -1,28 +1,27 @@
 [gd_scene load_steps=6 format=3 uid="uid://8flqeh3gn68"]
 
-[ext_resource type="Script" path="res://Renderer.gd" id="1_0maq1"]
-[ext_resource type="Script" path="res://Main.gd" id="1_6qp7h"]
-[ext_resource type="Texture2D" uid="uid://skthvfx7pq6m" path="res://_e2199ab5-ff42-4ddf-8540-1c16e2d7889f.jpeg" id="1_la77t"]
-[ext_resource type="Script" path="res://JobServer.gd" id="3_mg2dt"]
-[ext_resource type="Script" path="res://RemoteLoader.gd" id="4_k4afm"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_wxvbd"]
+[ext_resource type="Script" path="res://scripts/JobServer.gd" id="2_vpsid"]
+[ext_resource type="Script" path="res://scripts/RemoteLoader.gd" id="3_18f1s"]
+[ext_resource type="Texture2D" uid="uid://cxa8l2nu0ycg3" path="res://assets/icon.png" id="4_vknm6"]
+[ext_resource type="Script" path="res://scripts/Renderer.gd" id="5_ps8c1"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_6qp7h")
+script = ExtResource("1_wxvbd")
 
 [node name="JobServer" type="HTTPRequest" parent="."]
-script = ExtResource("3_mg2dt")
+script = ExtResource("2_vpsid")
 
 [node name="Remote" type="HTTPRequest" parent="."]
 process_mode = 3
-script = ExtResource("4_k4afm")
+script = ExtResource("3_18f1s")
 
 [node name="Placeholder" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(580.25, 314.25)
 scale = Vector2(0.532715, 0.532715)
-texture = ExtResource("1_la77t")
+texture = ExtResource("4_vknm6")
 
 [node name="Renderer" type="Node2D" parent="."]
-script = ExtResource("1_0maq1")
+script = ExtResource("5_ps8c1")
 
 [node name="RenderContainer" type="Node" parent="."]

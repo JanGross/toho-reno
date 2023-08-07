@@ -13,8 +13,8 @@ config_version=5
 config/name="toho-reno"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-boot_splash/show_image=false
-config/icon="res://icon.svg"
+boot_splash/image="res://assets/icon.png"
+config/icon="res://assets/icon.png"
 
 [rendering]
 

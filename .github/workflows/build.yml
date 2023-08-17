@@ -24,5 +24,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Client - ${{ matrix.platform }}
-          path: ${{ github.workspace }}/${{ steps.build.outputs.build }}
+          name: TohoReno-${{ matrix.platform }}
+          path: |
+            ${{ github.workspace }}/${{ steps.build.outputs.build }}
+            ${{ github.workspace }}/example-config.cfg

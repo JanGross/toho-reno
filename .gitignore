@@ -1,7 +1,7 @@
 ### Godot ###
 # Godot 4+ specific ignores
 .godot/
-/[Bb]uild/
+/[Bb]uilds/
 *_build/
 /[Oo]utput/
 /[Cc]ache/

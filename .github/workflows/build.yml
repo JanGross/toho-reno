@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux, windows]
+        platform:
+        - name: linux
+          extension: 
+        - name : windows
+          extension: .exe
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,18 +25,18 @@ jobs:
         id: build
         uses: manleydev/build-godot-action@v1.5.0
         with:
-          name: example
-          preset: ${{ matrix.platform }}
+          name: reno${{ matrix.platform.extension }}
+          preset: ${{ matrix.platform.name }}
           debugMode: "true"
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TohoReno-${{ matrix.platform }}
+          name: TohoReno-${{ matrix.platform.name }}
           path: |
             ${{ github.workspace }}/${{ steps.build.outputs.build }}
       - name: Upload Example Config Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TohoReno-${{ matrix.platform }}
+          name: TohoReno-${{ matrix.platform.name }}
           path: |
             ${{ github.workspace }}/example-config.cfg

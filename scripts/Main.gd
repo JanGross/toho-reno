@@ -14,6 +14,10 @@ signal finished_rendering
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#Setup transparency
+	get_tree().get_root().set_transparent_background(true)
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT, true, 0)
+	
 	config.load("res://config.cfg")
 	websocket_url = config.get_value("core", "websocket_url")
 	public_path = config.get_value("core", "public_path")
